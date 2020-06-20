@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE HTML>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>{{ title }}</title>
+<link rel="stylesheet" type="text/css" href="{% static 'common/css/bootstrap.min.css' %}" />
+</head>
+<body>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <div class="card card-body bg-light">{{ title }}</div>
+    </div><!-- /.col -->
+  </div><!-- /.row -->
+
+  <table class="table table-bordered">
+    <form action="{% url 'complete' %}" method="post">
+      {% csrf_token %}
+      <tr>
+        <td>ID</td>
+        <td><input class="form-control" type="text" name="id" value="{{ id }}" readonly></td>
+      </tr>
+      <tr>
+        <td>パスワード</td>
+        <td><input class="form-control" type="text" name="password" value="{{ password }}" readonly></td>
+      </tr>
+      <tr>
+        <td>確認用パスワード</td>
+        <td><input class="form-control" type="text" name="confirm_password" value="{{ confirm_password }}" readonly></td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <input class="btn btn-primary" type="submit" value="確認画面へ">
+          <input class="btn btn-secondary " type="button" value="前に戻る" onclick="history.back();">
+        </td>
+      </tr>
+    </form>
+  </table><!-- /.table.table-bordered -->
+</div><!-- /.container -->
+</body>
+</html>

@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE HTML>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>{{title}}</title>
+<link rel="stylesheet" type="text/css" href="{% static 'common/css/bootstrap.min.css' %}" />
+</head>
+<body>
+<h1>{{title}}</h1>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <p>FriendEntity CRUD処理</p>
+        <ul>
+          <li><a href="{% url 'hello_search' %}">ID検索画面</a></li>
+          <li><a href="{% url 'hello_find' %}">詳細検索画面</a></li>
+          <li><a href="{% url 'hello_insert' %}">作成画面</a></li>
+          <li><a href="{% url 'hello_valid' %}">妥当性チェック画面</a></li>
+          <li><a href="{% url 'hello_paging' %}">ページング画面</a></li>
+          <li><a href="{% url 'message_index' %}">メッセージ画面</a></li>
+        </ul>
+      </div><!-- /.card -->
+    </div><!-- /.col -->
+  </div><!-- /.row -->
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <p>{{msg|safe}}</p>
+      </div><!-- /.card -->
+    </div><!-- /.col -->
+  </div><!-- /.row -->
+  <!-- gotoの値はurlpatterns で指定したnameの値を設定するとその関数が呼ばれるリンクになる -->
+
+  <div class="row">
+    <div class="col">
+      <table class="table table-bordered table-hover table-striped">
+        <form action="{% url 'hello_index' %}" method="post">
+          {% csrf_token %}
+          {{ form.as_table }}
+          <tr>
+            <td colspan="2">
+              <input class="btn btn-primary" type="submit" value="送信">
+            </td>
+          </tr>
+        </form>
+      </table><!-- /.table table-bordered table-hover table-striped -->
+    </div><!-- /.col -->
+  </div><!-- /.row -->
+</div><!-- /.container -->
+</body>
+</html>

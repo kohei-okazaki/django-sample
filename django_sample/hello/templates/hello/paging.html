@@ -1,0 +1,69 @@
+{% load static %}
+<!DOCTYPE HTML>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>{{title}}</title>
+<link rel="stylesheet" type="text/css" href="{% static 'common/css/bootstrap.min.css' %}" />
+</head>
+<body>
+<h1>{{title}}</h1>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <table class="table table-bordered table-hover table-striped">
+        <tr>
+          <th></th>
+          <th></th>
+          <th>ID</th>
+          <th>NAME</th>
+          <th>GENDER</th>
+          <th>MAIL</th>
+          <th>AGE</th>
+          <th>BIRTHDAY</th>
+        </tr>
+        {% for entity in entity_list %}
+        <tr>
+          <td><a href="{% url 'hello_delete' entity.id %}">Delete</a></td>
+          <td><a href="{% url 'hello_edit' entity.id %}">Edit</a></td>
+          <td>{{entity.id}}</td>
+          <td>{{entity.name}}</td>
+          <td>
+            {% if entity.gender == False %}male{% endif %}
+            {% if entity.gender == True %}female{% endif %}
+          </td>
+          <td>{{entity.mail}}</td>
+          <td>{{entity.age}}</td>
+          <td>{{entity.birthday}}</td>
+        </tr>
+        {% endfor %}
+      </table><!-- /.table table-bordered table-hover table-striped -->
+      <div class="pagination">
+
+        {% if entity_list.has_previous %}
+        <a href="{% url 'hello_paging' %}">&laquo;先頭のページへ</a>
+        &nbsp;
+        <a href="{% url 'hello_paging' %}\{{entity_list.previous_page_number}}">&laquo;前のページへ</a>
+        {% endif %}
+
+        <span class="current">
+          [ {{entity_list.number}} / {{entity_list.paginator.num_pages}} ]
+        </span>
+
+        {% if entity_list.has_next %}
+        <a href="{% url 'hello_paging' %}\{{entity_list.next_page_number}}">次のページへ&raquo;</a>
+        &nbsp;
+        <a href="{% url 'hello_paging' %}\{{entity_list.paginator.num_pages}}">最後のページへ&raquo;</a>
+        {% endif %}
+
+      </div>
+    </div><!-- /.col -->
+  </div><!-- /.row -->
+  <div class="row">
+    <div class="col">
+      <a href="{% url 'hello_index' %}">一覧画面</a>
+    </div><!-- /.col -->
+  </div><!-- /.row -->
+</div><!-- /.container -->
+</body>
+</html>

@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE HTML>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>{{ title }}</title>
+<link rel="stylesheet" type="text/css" href="{% static 'common/css/bootstrap.min.css' %}" />
+</head>
+<body>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <div class="card card-body bg-light">{{ title }}</div>
+    </div><!-- /.col -->
+  </div><!-- /.row -->
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="alert alert-primary" role="alert">登録完了しました</div>
+      </div><!-- /.card -->
+    </div><!-- /.col -->
+  </div><!-- /.row -->
+  <a href="{% url 'index' %}" class="link">{{ index_view_name }}</a>
+</div><!-- /.container -->
+</body>
+</html>

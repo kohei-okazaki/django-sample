@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE HTML>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>{{ title }}</title>
+<link rel="stylesheet" type="text/css" href="{% static 'common/css/bootstrap.min.css' %}" />
+</head>
+<body>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <div class="card card-body bg-light">{{ title }}</div>
+    </div><!-- /.col -->
+  </div><!-- /.row -->
+
+  <ul class="list-group">
+    <li class="list-group-item">
+      <a href="{% url 'index' %}">{{ index_view_name }}</a>
+    </li>
+    <li class="list-group-item">
+      <a href="{% url 'input' %}">{{ input_view_name }}</a>
+    </li>
+  </ul><!-- /.list-group -->
+</div><!-- /.container -->
+</body>
+</html>

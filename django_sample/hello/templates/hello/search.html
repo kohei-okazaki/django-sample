@@ -1,0 +1,96 @@
+{% load static %}
+<!DOCTYPE HTML>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>{{title}}</title>
+<link rel="stylesheet" type="text/css" href="{% static 'common/css/bootstrap.min.css' %}" />
+</head>
+<body>
+<h1>{{title}}</h1>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <table class="table table-bordered table-hover table-striped">
+        <form action="{% url 'hello_search' %}" method="post">
+          {% csrf_token %}
+          {{ form.as_table }}
+          <tr>
+            <td colspan="2">
+              <input class="btn btn-primary" type="submit" value="送信">
+              <input class="btn btn-secondary" type="button" value="戻る" onclick="history.back();">
+            </td>
+          </tr>
+        </form>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      {% if record_count is not None %}
+      <div>件数={{record_count}}</div>
+      {% endif %}
+      {% if age_average is not None %}
+      <div>平均年齢={{age_average}}</div>
+      {% endif %}
+      {% if age_min is not None %}
+      <div>最小年齢={{age_min}}</div>
+      {% endif %}
+      {% if age_max is not None %}
+      <div>最大年齢={{age_max}}</div>
+      {% endif %}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <table class="table table-bordered table-hover table-striped">
+        <tr>
+          <th></th>
+          <th></th>
+          <th>ID</th>
+          <th>名前</th>
+          <th>性別</th>
+          <th>メールアドレス</th>
+          <th>年齢</th>
+          <th>生年月日</th>
+          <th>メッセージ</th>
+        </tr>
+        {% for entity in entity_list %}
+        <tr>
+          <td><a href="{% url 'hello_delete' entity.id %}">Delete</a></td>
+          <td><a href="{% url 'hello_edit' entity.id %}">Edit</a></td>
+          <td>{{ entity.id }}</td>
+          <td>{{ entity.name }}</td>
+          <td>
+            {% if entity.gender == False %}男性{% endif %}
+            {% if entity.gender == True %}女性{% endif %}
+          </td>
+          <td>{{ entity.mail }}</td>
+          <td>{{ entity.age }}</td>
+          <td>{{ entity.birthday }}</td>
+          <td>
+            <ul>
+              {% for message_entity in entity.message_set.all %}
+              <li>{{ message_entity.title }}</li>
+              {% endfor %}
+            </ul>
+          </td>
+        </tr>
+        {% endfor %}
+      </table><!-- /.table table-bordered table-hover table-striped -->
+      {% if entity_list.has_previous %}
+      <a href="{% url 'hello_search' %}/{{entity_list.previous_page_number}}">&laquo;Prev</a>
+      {% endif %}
+      {% if entity_list.has_next %}
+      <a href="{% url 'hello_search' %}/{{entity_list.next_page_number}}">Next&raquo;</a>
+      {% endif %}
+    </div><!-- /.col -->
+  </div><!-- /.row -->
+  <div class="row">
+    <div class="col">
+      <a href="{% url 'hello_index' %}">一覧画面</a>
+    </div><!-- /.col -->
+  </div><!-- /.row -->
+</div><!-- /.container -->
+</body>
+</html>

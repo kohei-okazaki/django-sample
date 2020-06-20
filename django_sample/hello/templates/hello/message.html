@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE HTML>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>{{title}}</title>
+<link rel="stylesheet" type="text/css" href="{% static 'common/css/bootstrap.min.css' %}" />
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h1>{{title}}</h1>
+      </div><!-- /.col -->
+    </div><!-- /.row -->
+
+    <div class="row">
+      <div class="col">
+        <form action="{% url 'message_index' %}" method="post">
+          <table class="table table-bordered table-hover table-striped">
+            {% csrf_token %}
+            {{ form.as_table }}
+            <tr>
+              <td colspan="2">
+                <input class="btn btn-primary" type="submit" value="送信">
+                <input class="btn btn-secondary" type="button" value="戻る" onclick="history.back();">
+              </td>
+            </tr>
+          </table><!-- /.table table-bordered table-hover table-striped -->
+        </form>
+      </div><!-- /.col -->
+    </div><!-- /.row -->
+    <hr>
+    <div class="row">
+      <div class="col">
+        <table class="table table-bordered table-hover table-striped">
+          <tr>
+            <th>タイトル</th>
+            <th>投稿者</th>
+            <th>投稿日時</th>
+          </tr>
+          {% for entity in message_entity_list %}
+          <tr>
+            <td>{{entity.title}}</td>
+            <td>{{entity.friend.name}}</td>
+            <td>{{entity.pub_date}}</td>
+          </tr>
+          {% endfor %}
+        </table><!-- /.table table-bordered table-hover table-striped -->
+        <div>
+        {% if message_entity_list.has_previous %}
+        <a href="{% url 'message_index'%}{{message_entity_list.previous_page_number}}">&laquo;Prev</a>
+        {% endif %}
+        {% if message_entity_list.has_next %}
+        <a href="{% url 'message_index'%}{{message_entity_list.next_page_number}}">Next&raquo;</a>
+        {% endif %}
+        </div>
+      </div><!-- /.col -->
+    </div><!-- /.row -->
+    <div class="row">
+      <div class="col">
+        <a href="{% url 'hello_index' %}">一覧画面</a>
+      </div><!-- /.col -->
+    </div><!-- /.row -->
+  </div><!-- /.container -->
+</body>
+</html>
